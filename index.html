@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Просто прочитай</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Montserrat:wght@300;400;600&display=swap');
+
+        body {
+            background-color: #0a0a0a;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(140, 82, 255, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(255, 77, 77, 0.05) 0%, transparent 40%);
+            color: #d1d1d1;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 580px;
+            width: 100%;
+            background-color: rgba(18, 18, 18, 0.95);
+            padding: 40px 30px;
+            border-radius: 4px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), inset 0 0 0 1px rgba(255,255,255,0.03);
+            position: relative;
+            z-index: 2;
+            transform: rotate(-0.5deg);
+        }
+
+        h1 {
+            font-family: 'Caveat', cursive;
+            font-size: 32px;
+            text-align: center;
+            color: #b18aff;
+            margin-bottom: 30px;
+            font-weight: 400;
+            transform: rotate(-1deg);
+            text-shadow: 0 0 20px rgba(140, 82, 255, 0.3);
+            letter-spacing: 1px;
+        }
+
+        p {
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 22px;
+            color: #b8b8b8;
+            font-weight: 300;
+            letter-spacing: 0.2px;
+        }
+
+        .highlight {
+            color: #e0e0e0;
+            font-weight: 600;
+        }
+
+        .whisper {
+            color: #666;
+            font-style: italic;
+            font-size: 13px;
+        }
+
+        .accent {
+            color: #ff6b6b;
+            font-weight: 600;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px 18px;
+            margin-bottom: 10px;
+            background-color: rgba(255, 255, 255, 0.03);
+            color: #b0b0b0;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-left: 3px solid #8c52ff;
+            border-radius: 6px;
+            font-size: 15px;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            background-color: rgba(140, 82, 255, 0.1);
+            border-left-color: #b18aff;
+            color: #fff;
+            transform: translateX(4px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .btn-primary {
+            background-color: rgba(140, 82, 255, 0.15);
+            border-left-color: #b18aff;
+            color: #e0d0ff;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            background-color: rgba(140, 82, 255, 0.3);
+            color: #fff;
+        }
+
+        .btn-danger {
+            border-left-color: #ff4d4d;
+            color: #ff9a9a;
+        }
+
+        .btn-danger:hover {
+            background-color: rgba(255, 77, 77, 0.1);
+            border-left-color: #ff6b6b;
+            color: #ffcccc;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .screen p {
+            animation: textFade 0.6s ease-in forwards;
+            opacity: 0;
+        }
+
+        .screen p:nth-child(1) { animation-delay: 0.1s; }
+        .screen p:nth-child(2) { animation-delay: 0.4s; }
+        .screen p:nth-child(3) { animation-delay: 0.7s; }
+        .screen p:nth-child(4) { animation-delay: 1.0s; }
+        .screen p:nth-child(5) { animation-delay: 1.3s; }
+
+        @keyframes textFade {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .footer {
+            text-align: center;
+            color: #444;
+            margin-top: 30px;
+            font-style: italic;
+            font-family: 'Caveat', cursive;
+            font-size: 14px;
+        }
+
+        a {
+            text-decoration: none;
+            display: block;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(140, 82, 255, 0.3), transparent);
+            margin: 25px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="game">
+    <!-- Экран 1 -->
+    <div id="screen1" class="screen fade-in">
+        <h1>Просто прочитай до конца</h1>
+        <p>Я не знал, как это сказать в чате. Там всё выглядит тупо и сухо.</p>
+        <p>Поэтому я собрал это. Это не игра. Это просто то, что я чувствую. Дойди до конца, ладно?</p>
+        <button class="btn btn-primary" onclick="nextScreen('screen2')">ладно, давай →</button>
+    </div>
+
+    <!-- Экран 2 -->
+    <div id="screen2" class="screen hidden">
+        <p>Окей. Представь, что ты — это ты. Сегодня хреновый день.</p>
+        <p>Всё бесит. Кажется, что всем на тебя плевать, и ты никому не нужна.</p>
+        <p class="whisper">Что ты чувствуешь?</p>
+        <button class="btn" onclick="nextScreen('screen3')">Я хочу, чтобы все отстали</button>
+        <button class="btn" onclick="nextScreen('screen4')">Я хочу, чтобы кто-то доказал, что я важна</button>
+    </div>
+
+    <!-- Экран 3 -->
+    <div id="screen3" class="screen hidden">
+        <p>Ты пишешь мне: <span class="highlight">«Ты мне не нужен, уходи»</span>.</p>
+        <p>Ты правда хочешь, чтобы я ушёл? Или ты хочешь, чтобы я остался, но боишься, что я сделаю больно?</p>
+        <p>Я вижу, как ты пишешь: «Я им рахуй не сдалась».</p>
+        <p>А потом сразу: «Нет, я не уйду».</p>
+        <p>Я не считаю тебя сумасшедшей. Я понимаю, что это защита. Ты просто проверяешь, выдержу ли я это.</p>
+        <button class="btn btn-primary" onclick="nextScreen('screen5')">а теперь посмотри, что чувствую я →</button>
+    </div>
+
+    <!-- Экран 4 -->
+    <div id="screen4" class="screen hidden">
+        <p>Ты пишешь: <span class="accent">«Ты меня раздражаешь»</span>.</p>
+        <p>Я знаю, что на самом деле ты хочешь сказать: <span class="highlight">«Мне больно, обними меня, но я не умею просить»</span>.</p>
+        <p>Ты злишься и отталкиваешь меня, потому что боишься, что я всё равно уйду. Так легче — ударить первым.</p>
+        <button class="btn btn-primary" onclick="nextScreen('screen5')">а теперь посмотри, что чувствую я →</button>
+    </div>
+
+    <!-- Экран 5 -->
+    <div id="screen5" class="screen hidden">
+        <p>А теперь представь меня.</p>
+        <p>Я стою напротив. Я вижу, как тебя кидает. Я слышу «уходи». Я слышу «ты мне не нужен».</p>
+        <div class="divider"></div>
+        <p>И знаешь что? Мне страшно. Я чувствую себя беспомощным.</p>
+        <p>Но при этом я всё ещё люблю тебя. Очень.</p>
+        <p>Я не хочу уходить. Я не хочу в эти игры. Я просто хочу быть рядом.</p>
+        <p>Но когда ты кричишь «уходи», я реально не знаю, что делать. Я не психолог и не спасатель. Я просто человек, который устал бояться, что ты исчезнешь.</p>
+        <button class="btn btn-primary" onclick="nextScreen('screen6')">что дальше? →</button>
+    </div>
+
+    <!-- Экран 6 -->
+    <div id="screen6" class="screen hidden">
+        <p>Эти качели могут длиться вечно. Пока мы не решим что-то поменять.</p>
+        <p>Я не могу выключить твои эмоции. Но я могу предложить другие правила.</p>
+        <div class="divider"></div>
+        <p class="whisper">Выбери:</p>
+        <button class="btn btn-danger" onclick="nextScreen('screen7')">Оставить как есть: кричать «уходи», пока кто-то не сломается</button>
+        <button class="btn btn-primary" onclick="nextScreen('screen8')">Попробовать иначе: говорить «мне нужна пауза» вместо криков</button>
+    </div>
+
+    <!-- Экран 7 (Тупик) -->
+    <div id="screen7" class="screen hidden">
+        <p>Эта игра заканчивается тем, что нам обоим больно.</p>
+        <p>Я не хочу в неё играть. Я хочу тебя. Но я не хочу, чтобы мы уничтожали друг друга.</p>
+        <button class="btn btn-primary" onclick="nextScreen('screen6')">вернуться и выбрать другое</button>
+    </div>
+
+    <!-- Экран 8 (Выход) -->
+    <div id="screen8" class="screen hidden">
+        <p>Я готов попробовать эти новые правила.</p>
+        <p>Я люблю тебя. Я здесь. Без претензий.</p>
+        <p>Просто нажми сюда, когда будешь готова поговорить.</p>
+        
+        <div class="divider"></div>
+        
+        <!-- ЗАМЕНИТЕ ССЫЛКУ НИЖЕ НА ВАШ TELEGRAM ИЛИ WHATSAPP -->
+        <a href="https://t.me/sky4ikks" target="_blank">
+            <button class="btn btn-primary">написать мне 💬</button>
+        </a>
+    </div>
+
+    <div class="footer">написал ночью. сам.</div>
+</div>
+
+<script>
+    function nextScreen(screenId) {
+        const screens = document.querySelectorAll('.screen');
+        screens.forEach(screen => {
+            screen.classList.add('hidden');
+            screen.classList.remove('fade-in');
+        });
+
+        const target = document.getElementById(screenId);
+        if (target) {
+            target.classList.remove('hidden');
+            setTimeout(() => {
+                target.classList.add('fade-in');
+            }, 10);
+        }
+    }
+</script>
+
+</body>
+</html>
